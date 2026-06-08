@@ -18,9 +18,8 @@ CARTA is a radio-astronomy visualization tool. This React + TypeScript frontend 
 - **ApiService**: HTTP API for configuration and runtime settings
 - **ScriptingService**: Python scripting interface for automation
 
-### UI Layout (GoldenLayout)
-- Uses patched `golden-layout@1.5.9` for widget management (see `patches/golden-layout+1.5.9.patch`)
-- Patch updates GoldenLayout to work with React 18's `createRoot` API
+### UI Layout
+- Using `flexlayout-react` for panel layout management. 
 - Widgets (histogram, spectral profiles, etc.) are dynamically created/destroyed
 - Each widget type has a corresponding store in `src/stores/Widgets/`
 
@@ -37,98 +36,13 @@ Built using Emscripten (4.0.3 recommended), requires Docker/Singularity OR nativ
 - Must run `protobuf/build_proto.sh` after protobuf changes
 - Backend/frontend ICD version currently: 30 (see `BackendService.IcdVersion`)
 
-## Development Workflows
-
-### Build Commands
-See build instructions in `instructions/build.instructions.md` for detailed build commands and options.
-
-### MCP server
-- Chrome devtools MCP
-- Start CARTA backend with `build/carta_backend --omp_threads 8 --debug_no_auth --verbosity 5 --no_browser` in a user specific carta-backend path
-- Default backend is at `http://localhost:3000`
-
-### Testing
-```bash
-npm test                     # Run Jest tests
-```
-
-Unit tests use Jest with canvas mocking. See `src/setupTests.js` for configuration.
-
-### Unit Test Guidelines
-For comprehensive unit test guidelines, see: https://cartavis.org/carta-frontend/docs/contributing/unit-test-guidelines
-
-**Running Unit Tests:**
-1. Install dependencies: `npm install`
-2. Build protobuf and WASM: `npm run build-protobuf && npm run build-libs && npm run build-wrappers`
-3. Run tests: `npm test` (Jest runs tests related to changed files by default)
-4. Use `npm test --verbose` for detailed output
-
-**Writing Unit Tests:**
-- **Directory Structure**: Colocate test files with `.test.ts/tsx` suffix:
-  ```
-  src/
-    components/
-      AComponent/
-        AComponent.tsx
-        AComponent.scss
-        AComponent.test.tsx
-    utilities/
-      math/
-        math.ts
-        math.test.ts
-  ```
-- **Test Structure**: Use `describe` blocks to organize tests:
-  ```typescript
-  describe("[unit]", () => {
-    test("[expected behavior]", () => {
-      // test implementation
-    });
-    
-    describe("[sub unit]", () => {
-      test("[expected behavior]", () => {
-        // test implementation
-      });
-    });
-  });
-  ```
-- **Best Practices**:
-  - Focus on low-level tests for specific classes or functions
-  - Mock imported classes/functions with Jest when necessary
-  - Import TypeScript enums without index files to avoid compile failures
-  - When testing React components:
-    - Avoid mocking Blueprint.js objects to prevent complex setups
-    - Avoid snapshot testing to keep codebase lean
-    - Follow [React Testing Library query priority](https://testing-library.com/docs/queries/about/#priority) when querying elements
-
-### Code Quality
-```bash
-npm run reformat             # Auto-format with Prettier
-npm run checkformat          # Check formatting
-npm run check-eslint         # Lint check
-npm run fix-eslint           # Auto-fix linting issues
-```
-
-**Import Ordering**: ESLint enforces specific import order (see package.json rules):
-1. React imports first
-2. External dependencies
-3. Internal modules (components, models, services, stores, utilities)
-4. Relative imports
-5. CSS imports last
-
-### Commit Skill
-Use the skill [git-commit](https://skills.sh/github/awesome-copilot/git-commit) to create well-formatted commit messages that follow the Conventional Commits specification.
-
-## Code Conventions
-
-### Naming Conventions
-Use the instruction file [style.instructions.md](./style.instructions.md) for detailed naming conventions.
-
 ### File Organization
 - **Components**: `src/components/` - React UI components
 - **Stores**: `src/stores/` - MobX state management (one folder per store)
 - **Services**: `src/services/` - Backend communication, WebGL rendering
 - **Models**: `src/models/` - Type definitions and data structures
 - **Utilities**: `src/utilities/` - Helper functions (AST wrappers, parsing, sorting, etc.)
+- **Enums**: `src/enums/` - Enumeration definitions
 
 ### TypeScript Configuration
 - `baseUrl: "./src"` allows absolute imports from src root
@@ -161,6 +75,55 @@ export class MyStore {
     }
 }
 ```
+
+## Development Workflows
+
+- Code should follow the clean code principle.
+- Use LLM following the skill [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills).
+
+### Build Commands
+See build skill in `skills/build-frontend/SKILL.md` for detailed build commands.
+
+### Naming Conventions
+Use the instruction file [style.instructions.md](./style.instructions.md) for detailed naming conventions.
+
+### Grammar
+- Use present tense verbs (is, open) instead of past tense (was, opened)
+- Write factual statements and direct commands. Avoid hypotheticals like "could" or "would"
+- Use active voice where the subject performs the action
+
+### Run checks
+After codebase changed, you should run the following checks to make sure the codebase is still in good condition:
+- `npm run fix-eslint`
+- `npm run reformat`
+- `npm test`
+- `npm run build-ts` or `npm run build` if `npm install` was performed
+
+### MCP server
+- Chrome devtools MCP
+- Start CARTA backend with `build/carta_backend --omp_threads 8 --debug_no_auth --verbosity 5 --no_browser` in a user specific carta-backend path
+- Default backend is at `http://localhost:3000`
+
+### Write unit test
+- Unit tests use Jest with canvas mocking. See `src/setupTests.js` for configuration.
+- Tests are colocated with source files using `.test.ts/tsx` suffix. Follow the test structure guidelines in `skills/unit-test/SKILL.md`.
+
+### Commit
+- Use the skill [git-commit](https://skills.sh/github/awesome-copilot/git-commit) to create well-formatted commit messages that follow the Conventional Commits specification.
+- Make multiple commits if the changes are large.
+
+### Change log update
+Use the skill [changelog](../skills/changelog/SKILL.md) to update the `CHANGELOG.md` file in the root directory.
+
+### Write down TSdoc
+When you modify any exported function or class, you should also write or update its TSDoc comments to keep the documentation up-to-date. The TSDoc comments should be written in the same style as the existing TSDoc comments in the codebase.
+
+- Write clear and concise documentation
+- Use consistent terminology and style
+- Code comments use TSDoc format
+
+
+
 
 ## Key Integration Points
 
@@ -200,76 +163,5 @@ Check readiness: `AppStore.Instance.astReady`, `AppStore.Instance.cartaComputeRe
 - **Blueprint.js**: UI component library (buttons, dialogs, etc.)
 - **Konva/react-konva**: Canvas-based region rendering
 - **Chart.js/react-chartjs-2**: Profile plot widgets
-- **golden-layout**: Multi-panel layout (PATCHED for React 18)
+- **Flexlayout-react**: Layout manager
 - **plotly.js**: Advanced plotting features
-
-## Change log update
-Use the skill [changelog](../skills/changelog/SKILL.md) to update the `CHANGELOG.md` file in the root directory.
-
-## Documentation
-
-For comprehensive documentation guidelines, see: https://cartavis.org/carta-frontend/docs/contributing/documentation-guidelines
-
-### General Guidelines
-- Write clear and concise documentation
-- Use consistent terminology and style
-- Code comments use TSDoc format
-- Write TSDoc comments for methods and classes in `src/stores/`
-
-### Grammar
-- Use present tense verbs (is, open) instead of past tense (was, opened)
-- Write factual statements and direct commands. Avoid hypotheticals like "could" or "would"
-- Use active voice where the subject performs the action
-
-### Building Documentation
-The documentation website is hosted on GitHub Pages and automatically updates when the `dev` branch changes.
-
-**Local Development:**
-```bash
-cd docs_website/
-npm install
-npm start                    # Development server with auto-reload
-npm run build                # Create production build
-npm run serve                # Test production build
-```
-
-Note: Search feature only available in production builds.
-
-**Formatting:**
-```bash
-npm run checkformat          # Check markdown format
-npm run reformat             # Auto-fix format
-```
-
-Uses Prettier to maintain consistent markdown styling (indentation, line length, list numbering).
-
-### Writing Documentation Pages
-- Docs pages are in `docs/` directory
-- API overview page is in `api/` directory
-- Edit markdown files directly to modify content or add pages
-- Use `.mdx` extension when using MDX components
-- For version-specific links:
-  - Use `DocsIndexLink` component for Docs index pages
-  - Use `ApiLink` component for API subpages
-
-### Writing API Documentation
-API subpages are auto-generated from TSDoc comments in the codebase:
-- Catalogs based on `index.ts` files
-- Elements must be exported in respective `index.ts` to appear in catalogs
-- Private and protected elements are not displayed
-- Development server does not auto-rebuild TSDoc (manual rebuild required after changes)
-
-**TSDoc Format:**
-- Follow [TSDoc documentation](https://tsdoc.org/)
-- ESLint enforces format requirements
-- Run `npm run check-eslint` from repository root to check
-
-### Versioning
-To tag a new documentation version:
-```bash
-cd docs_website/
-npm run docusaurus docs:version 1.2.3
-npm run docusaurus api:version 1.2.3
-```
-
-This updates `versions.json` and creates files in `versioned_docs/` and `versioned_sidebars/` folders.
