@@ -75,9 +75,6 @@ class WidgetStore {
     // private static readonly — PascalCase
     private static readonly DefaultConfig = { ... };
 
-    // static property — camelCase
-    public static instance: WidgetStore;
-
     // public static accessor — PascalCase
     public static get ActiveId() { ... }
 

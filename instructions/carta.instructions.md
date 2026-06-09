@@ -40,6 +40,7 @@ Built using Emscripten (4.0.3 recommended), requires Docker/Singularity OR nativ
 - **Components**: `src/components/` - React UI components
 - **Stores**: `src/stores/` - MobX state management (one folder per store)
 - **Services**: `src/services/` - Backend communication, WebGL rendering
+- **Scripting**: `src/scripting/` - Python scripting interface
 - **Models**: `src/models/` - Type definitions and data structures
 - **Utilities**: `src/utilities/` - Helper functions (AST wrappers, parsing, sorting, etc.)
 - **Enums**: `src/enums/` - Enumeration definitions
@@ -79,7 +80,7 @@ export class MyStore {
 ## Development Workflows
 
 - Code should follow the clean code principle.
-- Use LLM following the skill [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills).
+- Use LLM following the skill [andrej-karpathy-skills](../skills/andrej-karpathy-skills/SKILL.md).
 
 ### Build Commands
 See build skill in `skills/build-frontend/SKILL.md` for detailed build commands.
@@ -94,8 +95,7 @@ Use the instruction file [style.instructions.md](./style.instructions.md) for de
 
 ### Run checks
 After codebase changed, you should run the following checks to make sure the codebase is still in good condition:
-- `npm run fix-eslint`
-- `npm run reformat`
+- `npm run check-eslint`
 - `npm test`
 - `npm run build-ts` or `npm run build` if `npm install` was performed
 
@@ -109,7 +109,7 @@ After codebase changed, you should run the following checks to make sure the cod
 - Tests are colocated with source files using `.test.ts/tsx` suffix. Follow the test structure guidelines in `skills/unit-test/SKILL.md`.
 
 ### Commit
-- Use the skill [git-commit](https://skills.sh/github/awesome-copilot/git-commit) to create well-formatted commit messages that follow the Conventional Commits specification.
+- Use the skill [git-commit](../skills/git-commit/SKILL.md) to create well-formatted commit messages that follow the Conventional Commits specification.
 - Make multiple commits if the changes are large.
 
 ### Change log update
