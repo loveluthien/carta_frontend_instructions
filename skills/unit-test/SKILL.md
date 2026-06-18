@@ -57,6 +57,10 @@ describe("[unit]", () => {
 });
 ```
 
+### Eslint
+
+Run `npm run check-eslint` to ensure your test files follow the project's ESLint rules. This helps maintain code quality and consistency.
+
 ### Best Practices
 - **Scope**: Focus on low-level unit tests for specific classes or functions.
 - **Mocking**: Mock imported classes or functions with Jest when necessary to isolate components.
