@@ -39,7 +39,7 @@ Built using Emscripten (4.0.3 recommended), requires Docker/Singularity OR nativ
 ### File Organization
 - **Components**: `src/components/` - React UI components
 - **Stores**: `src/stores/` - MobX state management (one folder per store)
-- **Services**: `src/services/` - Backend communication, WebGL rendering
+- **Services**: `src/services/` - Backend communication, WebGL rendering, online data query, API, and scripting, etc.
 - **Scripting**: `src/scripting/` - Python scripting interface
 - **Models**: `src/models/` - Type definitions and data structures
 - **Utilities**: `src/utilities/` - Helper functions (AST wrappers, parsing, sorting, etc.)
