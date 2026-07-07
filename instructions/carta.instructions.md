@@ -79,7 +79,7 @@ export class MyStore {
 
 ## Development Workflows
 
-- Code should follow the clean code principle.
+- Code should follow the clean code principle and [ponytail-skills](../skills/ponytail/SKILL.md).
 - Use LLM following the skill [andrej-karpathy-skills](../skills/andrej-karpathy-skills/SKILL.md).
 
 ### Build Commands
