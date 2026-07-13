@@ -12,7 +12,7 @@
 - Leading underscores (`_name`) are **allowed**.
 - Trailing underscores are **forbidden**.
 
-### Types, Classes, Interfaces, Enums, Type Aliases
+### Types, Classes, Interfaces, Enums, Type Aliases, Type Parameters
 
 Use **`PascalCase`**.
 
@@ -23,12 +23,12 @@ enum CoordinateMode { ... }
 type FrameId = number;
 ```
 
-### Variables and Functions
+### Variables, Parameters, and Functions
 
 - Local variables and function names: **`camelCase`** (leading `_` allowed).
-- Global module-level variables of type `number`, `string`, `boolean`, or array: **`UPPER_CASE`**.
-- Global module-level exported variables: **`UPPER_CASE`**.
-- Global module-level variables of type `function` (i.e. a function stored in a variable at module scope): **`PascalCase`**.
+- Parameters: **`camelCase`** or **`PascalCase`** (leading `_` allowed).
+- Global module-level `const` variables: **`UPPER_CASE`**.
+- Global module-level `const` variables of type `function` (i.e. a function stored in a variable at module scope): **`PascalCase`**.
 
 ```ts
 const frameCount = 5;                  // local, camelCase
@@ -39,7 +39,7 @@ const FormatLabel = (s: string) => s;  // global function variable, PascalCase
 
 ### Boolean Identifiers
 
-Variables, parameters, properties, and accessors of **boolean type** must use **`PascalCase`** and one of these prefixes: `is`, `should`, `has`, `can`, `did`, `will`.
+Variables, parameters, properties, and accessors of **boolean type** must use **`PascalCase`** and one of these prefixes: `is`, `are`, `should`, `has`, `have`, `can`, `did`, `will` (leading `_` allowed).
 
 ```ts
 isLoading: boolean;
@@ -55,11 +55,12 @@ willUnmount: boolean;
 | Member | Modifiers | Format |
 |--------|-----------|--------|
 | Instance method / property / accessor | — | `camelCase` |
-| Static accessor (`get`/`set`) | `static` | `PascalCase` |
-| Static property | `public static` | `PascalCase` |
+| Protected property | `protected` | `camelCase` |
+| Static property (not readonly) | `static` | `camelCase` |
 | Static readonly property | `public static readonly` | `UPPER_CASE` |
 | Static readonly property | `private static readonly` | `PascalCase` |
-| Static method | `public static` | `PascalCase` |
+| Static accessor (`get`/`set`) | `public static` | `PascalCase` |
+| Static method | `static` | `camelCase` |
 
 ```ts
 class WidgetStore {
@@ -69,21 +70,28 @@ class WidgetStore {
     updateFrame() { ... }
 
     // public static readonly — UPPER_CASE
-    static readonly MAX_WIDGETS = 32;
+    public static readonly MAX_WIDGETS = 32;
 
     // private static readonly — PascalCase
     private static readonly DefaultConfig = { ... };
 
-    // public static property — PascalCase
-    static Instance: WidgetStore;
-
     // public static accessor — PascalCase
-    static get ActiveId() { ... }
+    public static get ActiveId() { ... }
 
-    // public static method — PascalCase
-    static CreateStore() { ... }
+    // static method — camelCase
+    public static createStore() { ... }
 }
 ```
+
+**Always add `public` to `static` properties and methods if they are not private.**
+
+### Exceptions
+
+The following legacy identifiers and specific prefixes are exempted from the naming conventions and can be used with any casing:
+- Legacy identifiers: `N`, `M`, `p`, `UIn8`, `Iz`, `Jys`, `SN`
+- Specific prefixes: `CARTA`, `HDU`, `WCS`
+
+**Don't add another exception.**
 
 ### Enum Members, Object Literal Properties/Methods, Type Properties/Methods
 
@@ -99,7 +107,7 @@ const config = { "content-type": "json", maxItems: 5 };
 Imports must be grouped and sorted by `eslint-plugin-simple-import-sort` in this order:
 
 1. `react` and external packages (`@?\\w`)
-2. Internal aliases: `components`, `enums`, `icons`, `models`, `services`, `stores`, `utilities`
+2. Internal aliases: `components`, `enums`, `icons`, `models`, `scripting`, `services`, `stores`, `utilities`
 3. Side-effect imports
 4. Parent-directory relative imports (`../`)
 5. Same-directory relative imports (`./`)

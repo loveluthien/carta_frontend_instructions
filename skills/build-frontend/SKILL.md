@@ -1,6 +1,7 @@
-# Build CARTA Frontend Guide
-
-Build the CARTA frontend from source, including WebAssembly libraries, protocol buffers, and TypeScript compilation. Supports Docker, Singularity, and native Emscripten builds.
+---
+name: build-frontend
+description: Build the CARTA frontend from source, including WebAssembly libraries, protocol buffers, and TypeScript compilation. Supports Docker, Singularity, and native Emscripten builds.
+---
 
 ## Prerequisites
 - Node.js (LTS) and npm installed
