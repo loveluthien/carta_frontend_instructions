@@ -1,1 +1,1 @@
-This is the AI agents instructions and skills for the CARTA frontend development. It is a work in progress and will be updated as the project evolves. The instructions are intended to provide guidance on how to use the CARTA frontend codebase effectively, including TypeScript configuration, component and store patterns, development workflows, build commands, naming conventions, grammar, run checks, and MCP server setup.
+This is the AI agents skills for the CARTA frontend development. It is a work in progress and will be updated as the project evolves.
