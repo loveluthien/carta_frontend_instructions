@@ -28,3 +28,4 @@ When user requests to write a changelog.
 - For bug fixes, describe the issue what was fixed. Example: `Fixed a bug where the frontend would crash when loading large FITS files ([#123](issue_link))`.
 - For new features, describe the feature. Example: `Added support for displaying spectral line data in the widget ([#456](issue_link))`.
 - For changes, describe the change and its impact on users. Example: `Changed the default color scheme to improve visibility of faint features in astronomical images ([#789](issue_link))`.
+- New entry should be in the last line of `### Added`, `### Changed`, or `### Fixed` under `## [Unreleased]` section.
