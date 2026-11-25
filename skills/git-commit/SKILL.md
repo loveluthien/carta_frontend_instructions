@@ -122,3 +122,7 @@ EOF
 - NEVER skip hooks (--no-verify) unless user asks
 - NEVER force push to main/master
 - If commit fails due to hooks, fix and create NEW commit (don't amend)
+
+## Do not commit review reports
+
+If there is `review_xxxx_123.md` or `xxx_111_review.md` file, do not commit it.
