@@ -7,3 +7,4 @@ description: Review and validate CARTA frontend changes.
 - Review should include the refactoring and performance improvement. 
 - Give the commit for each fixing (or refactoring) within the reviewing loop. 
 - Export the review report in markdown format file with the file name including the issue name (or PR number) and commit number. 
+- Put the review report in the `tmp` folder.
